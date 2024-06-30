@@ -1,5 +1,3 @@
-declare let require: any;
-
 const tailwindConfig = {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   mode: "jit",
