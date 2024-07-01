@@ -105,17 +105,46 @@ const formatText = (text: string) => {
   return <Interweave content={Marked.parse(text)} />;
 };
 
+const fetchOrDecodeURIComponent = (reaction: Reaction) => {
+  if (reaction.char) {
+    return reaction.char;
+  }
+
+  return (
+    <div className="mt-4 flex items-center space-x-2">
+      <a href={"https://scrapbook.hackclub.com/r/" + reaction.name}>
+        <img
+          src={reaction.url ?? ""}
+          alt={reaction.name}
+          className="size-8 rounded-3xl"
+          style={{
+            backgroundColor: "#151613",
+            transition: "background-color 0.125s ease-in-out;",
+          }}
+        />
+      </a>
+      <p></p>
+    </div>
+  );
+};
+
 const Scrapbook = () => {
+  const [user, setUser] = useState<User | null>(null);
   const [posts, setPosts] = useState<Post[]>([]);
   const [postsShouldUpdate, setPostsShouldUpdate] = useState(true);
 
   useEffect(() => {
+    const refetchUser = async () => {
+      const fetchedUser = await getUser("UFifty50sh");
+      setUser(fetchedUser);
+    };
+
     const fetchAndSetPosts = async () => {
       const fetchedPosts = await getPosts("UFifty50sh");
       let updatedPosts = fetchedPosts;
 
       // Calculate how many empty posts are needed to make the total a multiple of 3
-      const emptyPostsCount = (3 - (updatedPosts.length % 3)) % 3;
+      const emptyPostsCount = (2 - (updatedPosts.length % 2)) % 2;
       const emptyPosts = Array.from({ length: emptyPostsCount }, (_, i) => ({
         id: `empty-${i}`,
         user: [],
@@ -134,13 +163,14 @@ const Scrapbook = () => {
       setPosts(updatedPosts);
     };
 
+    refetchUser();
     fetchAndSetPosts();
   }, [postsShouldUpdate]);
 
   return (
     <div className="layout fixed left-0 z-10 size-full bg-[#141414] bg-fixed text-white selection:bg-zinc-300 selection:text-black">
       <div className="container mx-auto mt-5 h-full p-4">
-        <div className="mb-10 mt-5">
+        <div className="mb-3 mt-6">
           <h1 className="inline-block text-3xl font-bold">
             My Hack Club Scrapbook
           </h1>
@@ -152,7 +182,15 @@ const Scrapbook = () => {
           </button>
         </div>
 
-        <div className="mt-4 grid grid-cols-3 gap-4">
+        <div className="mb-7 flex items-center space-x-1">
+          <p className="text-sm">Current streak:</p>
+          <p className="text-lg font-bold">{user?.profile.streakCount}</p>
+          <p className="text-2xl">|</p>
+          <p className="text-sm">Max streak:</p>
+          <p className="text-lg font-bold">{user?.profile.maxStreaks}</p>
+        </div>
+
+        <div className="mt-4 grid h-auto grid-cols-2 gap-4">
           {posts?.map((post) => {
             const numAttachments = post.attachments.length;
             let gridTemplate = "grid-cols-1 grid-rows-1";
@@ -160,7 +198,7 @@ const Scrapbook = () => {
 
             if (numAttachments == 2) {
               gridTemplate = "grid-cols-2 grid-rows-1";
-              cssClasses = "";
+              cssClasses = "double-image";
             } else if (numAttachments == 3) {
               gridTemplate = "grid-cols-2 grid-rows-2";
               cssClasses = "triple-image";
@@ -177,14 +215,17 @@ const Scrapbook = () => {
                 <h2>{formatText(post.text)}</h2>
 
                 <div
-                  className={`h-4/5 ${gridTemplate} ${cssClasses} mt-3 grid gap-3`}
+                  className={`${gridTemplate} ${cssClasses} mt-3 grid gap-3`}
                 >
                   {post.attachments.map((attachment, i) => (
                     <div
                       key={attachment + i}
                       className={`relative overflow-hidden rounded-lg ${numAttachments == 3 && i == 0 ? "col-span-1 row-span-1 size-full" : ""}`}
                       style={{
-                        paddingBottom: numAttachments <= 2 ? "0" : "60%",
+                        paddingBottom:
+                          numAttachments <= 2
+                            ? "0"
+                            : numAttachments * 10 + 10 + "%",
                         height: numAttachments <= 2 ? "auto" : "0",
                       }}
                     >
@@ -194,9 +235,18 @@ const Scrapbook = () => {
                         className={`${
                           numAttachments == 1
                             ? "h-auto w-full"
-                            : "absolute inset-0 size-full object-none"
+                            : "inset-0 size-full object-none"
                         }`}
                       />
+                    </div>
+                  ))}
+                </div>
+
+                {/* reactions */}
+                <div className="flex items-center space-x-2">
+                  {post.reactions.map((reaction) => (
+                    <div key={reaction.name} className="flex items-center">
+                      {fetchOrDecodeURIComponent(reaction)}
                     </div>
                   ))}
                 </div>
