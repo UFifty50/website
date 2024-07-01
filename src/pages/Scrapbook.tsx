@@ -125,7 +125,6 @@ const Scrapbook = () => {
         text: "There is no post!",
         attachments: [
           "https://i.kym-cdn.com/entries/icons/facebook/000/012/777/tumblr_lp63ykUGJy1qfzq7j.jpg",
-          "https://i.kym-cdn.com/entries/icons/facebook/000/012/777/tumblr_lp63ykUGJy1qfzq7j.jpg",
         ],
         mux: [],
         reactions: [],
@@ -157,10 +156,17 @@ const Scrapbook = () => {
           {posts?.map((post) => {
             const numAttachments = post.attachments.length;
             let gridTemplate = "grid-cols-1 grid-rows-1";
+            let cssClasses = "single-image";
+
             if (numAttachments == 2) {
               gridTemplate = "grid-cols-2 grid-rows-1";
-            } else if (numAttachments >= 3) {
+              cssClasses = "";
+            } else if (numAttachments == 3) {
               gridTemplate = "grid-cols-2 grid-rows-2";
+              cssClasses = "triple-image";
+            } else if (numAttachments > 3) {
+              gridTemplate = "grid-cols-2 grid-rows-2";
+              cssClasses = "quadruple-image";
             }
 
             return (
@@ -170,20 +176,26 @@ const Scrapbook = () => {
                 </p>
                 <h2>{formatText(post.text)}</h2>
 
-                <div className={`${gridTemplate} mt-3 grid gap-3`}>
+                <div
+                  className={`h-4/5 ${gridTemplate} ${cssClasses} mt-3 grid gap-3`}
+                >
                   {post.attachments.map((attachment, i) => (
                     <div
                       key={attachment + i}
-                      className={`relative overflow-hidden rounded-lg ${numAttachments == 3 && i == 0 ? "col-span-2 row-span-2" : ""}`}
+                      className={`relative overflow-hidden rounded-lg ${numAttachments == 3 && i == 0 ? "col-span-1 row-span-1 size-full" : ""}`}
                       style={{
-                        paddingBottom: numAttachments == 1 ? "0" : "50%",
-                        height: numAttachments === 1 ? "auto" : "0",
+                        paddingBottom: numAttachments <= 2 ? "0" : "60%",
+                        height: numAttachments <= 2 ? "auto" : "0",
                       }}
                     >
                       <img
                         src={attachment}
                         alt="attachment"
-                        className={`size-full ${numAttachments == 1 ? "" : "absolute"} inset-0 object-cover`}
+                        className={`${
+                          numAttachments == 1
+                            ? "h-auto w-full"
+                            : "absolute inset-0 size-full object-none"
+                        }`}
                       />
                     </div>
                   ))}
