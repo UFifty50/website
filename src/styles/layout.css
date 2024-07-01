@@ -1,14 +1,10 @@
 .layout {
-  background-image: radial-gradient(hsla(0, 0%, 84%, 0.25) 1px, transparent 0),
-    radial-gradient(hsla(0, 0%, 65%, 0.2) 1px, transparent 0);
-
-
+  background-image: radial-gradient(hsla(313,49%,28%,.442) 1px,transparent 0),radial-gradient(hsla(228,59%,29%,.425) 1px,transparent 0);
   background-size: 50px 50px;
-  background-position:
-    0 0,
-    25px 25px;
+  background-position: 0 0, 25px 25px;
+  
   -webkit-animation: slide 2s linear infinite;
-  animation: slide 4s linear infinite;
+  animation: slide 5s linear infinite
 }
 
 @keyframes slide {
