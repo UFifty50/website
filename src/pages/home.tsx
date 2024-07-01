@@ -353,7 +353,7 @@ const Home = () => {
                 rel="noopener noreferrer"
                 className="flex rounded-full border border-zinc-700 px-6 py-3 duration-300 hover:bg-white/10 hover:shadow-md hover:shadow-black"
               >
-                <Github className="mr-2 h-5 w-5 " />
+                <Github className="mr-2 size-5 " />
                 View Profile
               </a>
             </div>
@@ -386,19 +386,19 @@ const Home = () => {
               href={p.link}
               target="_blank"
               rel="noopener noreferrer"
-              className="card before:size-full after:size-full group relative h-48 w-full rounded-xl bg-zinc-700 shadow-md shadow-black outline-none before:absolute before:left-0 before:top-0 before:rounded-xl before:opacity-0 before:transition-opacity before:duration-500 after:absolute after:left-0 after:top-0 after:rounded-xl after:opacity-0 after:transition-opacity after:duration-500 hover:shadow-xl hover:shadow-black hover:before:opacity-100"
+              className="card group relative h-48 w-full rounded-xl bg-zinc-700 shadow-md shadow-black outline-none before:absolute before:left-0 before:top-0 before:size-full before:rounded-xl before:opacity-0 before:transition-opacity before:duration-500 after:absolute after:left-0 after:top-0 after:size-full after:rounded-xl after:opacity-0 after:transition-opacity after:duration-500 hover:shadow-xl hover:shadow-black hover:before:opacity-100"
             >
               <div className="absolute inset-px z-[2] flex flex-col gap-2.5 rounded-xl bg-[#141414] p-2.5">
-                <div className="size-full relative overflow-hidden rounded-md p-4">
-                  <div className="size-14 mb-3.5">{<p.logo />}</div>
+                <div className="relative size-full overflow-hidden rounded-md p-4">
+                  <div className="mb-3.5 size-14">{<p.logo />}</div>
 
                   <h3 className="text-xl">
-                    <div className="size-full flex items-center after:absolute after:inset-0">
+                    <div className="flex size-full items-center after:absolute after:inset-0">
                       {p.title}
 
                       <MoveUpRight
                         strokeWidth={0.75}
-                        className="size-4 ml-1 text-white"
+                        className="ml-1 size-4 text-white"
                       />
                     </div>
                   </h3>
@@ -429,19 +429,19 @@ const Home = () => {
               href={f.link}
               target="_blank"
               rel="noopener noreferrer"
-              className="card group relative h-48 w-full rounded-xl bg-zinc-700 shadow-md shadow-black outline-none before:absolute before:left-0 before:top-0 before:h-full before:w-full before:rounded-xl before:opacity-0 before:transition-opacity before:duration-500 after:absolute after:left-0 after:top-0 after:h-full after:w-full after:rounded-xl after:opacity-0 after:transition-opacity after:duration-500 hover:shadow-xl hover:shadow-black hover:before:opacity-100"
+              className="card group relative h-48 w-full rounded-xl bg-zinc-700 shadow-md shadow-black outline-none before:absolute before:left-0 before:top-0 before:size-full before:rounded-xl before:opacity-0 before:transition-opacity before:duration-500 after:absolute after:left-0 after:top-0 after:size-full after:rounded-xl after:opacity-0 after:transition-opacity after:duration-500 hover:shadow-xl hover:shadow-black hover:before:opacity-100"
             >
-              <div className="absolute inset-[1px] z-[2] flex flex-col gap-2.5 rounded-xl bg-[#141414] p-2.5">
-                <div className="relative h-full w-full overflow-hidden rounded-md p-4">
-                  <div className="mb-3.5 h-14 w-14">{<f.logo />}</div>
+              <div className="absolute inset-px z-[2] flex flex-col gap-2.5 rounded-xl bg-[#141414] p-2.5">
+                <div className="relative size-full overflow-hidden rounded-md p-4">
+                  <div className="mb-3.5 size-14">{<f.logo />}</div>
 
                   <h3 className="text-xl">
-                    <div className="flex h-full w-full items-center after:absolute after:inset-0">
+                    <div className="flex size-full items-center after:absolute after:inset-0">
                       {f.title}
 
                       <MoveUpRight
                         strokeWidth={0.75}
-                        className="size-4 ml-1 text-white"
+                        className="ml-1 size-4 text-white"
                       />
                     </div>
                   </h3>
@@ -458,7 +458,7 @@ const Home = () => {
 
       <footer className="container mt-10 grid place-items-center pb-4">
         <span className="flex items-center gap-1">
-          <Copyright className="h-4 w-4" />
+          <Copyright className="size-4" />
 
           <span>{new Date().getFullYear()}</span>
 

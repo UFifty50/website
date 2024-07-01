@@ -15,7 +15,9 @@
     "prepare": "husky install"
   },
   "dependencies": {
+    "@ts-stack/markdown": "^1.5.0",
     "clsx": "^2.0.0",
+    "interweave": "^13.1.0",
     "lucide-react": "^0.287.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
