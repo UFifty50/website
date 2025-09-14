@@ -102,7 +102,8 @@ const getPosts = async (username: string): Promise<Post[]> => {
 // takes a string and returns a jsx element, with markdown formatting
 const formatText = (text: string) => {
   Marked.setOptions({ renderer: new MyRenderer() });
-  return <Interweave content={Marked.parse(text)} />;
+  const parsed = Marked.parse(text);
+  return parsed;
 };
 
 const fetchOrDecodeURIComponent = (reaction: Reaction) => {
@@ -119,7 +120,7 @@ const fetchOrDecodeURIComponent = (reaction: Reaction) => {
           className="size-8 rounded-3xl"
           style={{
             backgroundColor: "#151613",
-            transition: "background-color 0.125s ease-in-out;",
+            transition: "background-color 0.125s ease-in-out",
           }}
         />
       </a>
@@ -207,12 +208,16 @@ const Scrapbook = () => {
               cssClasses = "quadruple-image";
             }
 
+            const formattedText = formatText(post.text);
+
             return (
               <div key={post.id} className="rounded-lg bg-[#1e1e1e] p-4">
                 <p className="text-sm text-gray-400">
                   {new Date(post.postedAt).toUTCString()}
                 </p>
-                <h2>{formatText(post.text)}</h2>
+                <h2>
+                  <Interweave content={formattedText} />
+                </h2>
 
                 <div
                   className={`${gridTemplate} ${cssClasses} mt-3 grid gap-3`}
